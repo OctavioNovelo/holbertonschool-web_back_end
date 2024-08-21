@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
+"""
+    Truncate float to integer
+"""
 
 
-'''Description: The function take a float like and argument and return
-                the floor of that float
-    Arguments: a flaot
-    '''
-def floor(a: float)
-    
+def floor(n: float) -> int:
+    """
+        Args:
+            n: float number
+
+        Return:
+            Float number truncated to floor
+    """
+
+    return int(n)
