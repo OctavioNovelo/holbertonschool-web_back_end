@@ -8,7 +8,6 @@ function countStudents(path) {
       console.log('Number of students: 0');
       return;
     }
-    const headers = lines[0].split(',');
     const students = lines.slice(1);
     console.log(`Number of students: ${students.length}`);
     const fields = {};
