@@ -3,7 +3,7 @@ const fs = require('fs');
 function countStudents(path) {
   try {
     const data = fs.readFileSync(path, 'utf-8').trim();
-    const lines = data.split('\n').filter(line => line !== '');
+    const lines = data.split('\n').filter((line) => line !== ''); // Aquí se agregó el paréntesis
     if (lines.length <= 1) {
       console.log('Number of students: 0');
       return;
