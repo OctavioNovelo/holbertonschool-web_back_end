@@ -1,32 +1,34 @@
-const http = require('http');
 const fs = require('fs');
-const path = require('path');
 
-const countStudents = require('./3-read_file_async');
-const databasePath = process.argv[2] || '';
-const app = http.createServer(async (req, res) => {
-  if (req.url === '/') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello Holberton School!');
-  } else if (req.url === '/students') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.write('This is the list of our students\n');
-    if (!databasePath) {
-      res.end('Cannot load the database\n');
-    } else {
-      try {
-        const result = await countStudents(databasePath);
-        res.end(result);
-      } catch (error) {
-        res.end(`${error.message}\n`);
+function countStudents(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) {
+        reject(new Error('Cannot load the database'));
+        return;
       }
-    }
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not Found');
-  }
-});
-app.listen(1245, () => {
-  console.log('Server is running on port 1245');
-});
-module.exports = app;
+      const lines = data.split('\n').filter(line => line.trim() !== '');
+      if (lines.length <= 1) {
+        resolve('Number of students: 0\n');
+        return;
+      }
+      const students = lines.slice(1);
+      let result = `Number of students: ${students.length}\n`;
+      const fields = {};
+      students.forEach((student) => {
+        const studentData = student.split(',');
+        const firstName = studentData[0];
+        const field = studentData[3];
+        if (!fields[field]) {
+          fields[field] = [];
+        }
+        fields[field].push(firstName);
+      });
+      for (const [field, names] of Object.entries(fields)) {
+        result += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}\n`;
+      }
+      resolve(result.trim() + '\n'); 
+    });
+  });
+}
+module.exports = countStudents;
