@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Este script contiene una función para convertir un 
+Este script contiene una función para convertir un
 número flotante en su representación de cadena.
 """
 
