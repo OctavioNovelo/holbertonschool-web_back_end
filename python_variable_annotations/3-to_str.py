@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-Este script contiene una función para convertir un número flotante en su representación de cadena.
+Este script contiene una función para convertir un 
+número flotante en su representación de cadena.
 """
+
 
 def to_str(n: float) -> str:
     """
